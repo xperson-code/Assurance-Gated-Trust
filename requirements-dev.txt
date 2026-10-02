@@ -1,0 +1,3 @@
+# The demo itself (agt/, examples/, stress/, evaluation/, run_demo.py) only
+# needs the Python standard library (3.9+). pytest is only needed for tests/.
+pytest>=7
