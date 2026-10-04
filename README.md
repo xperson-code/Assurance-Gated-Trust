@@ -30,13 +30,17 @@ stress/                   large-scale randomized testing of the *real* engine (n
                               conditional domain-safety preservation (B1–B4), and strict expressivity (Theorem 1)
 
 evaluation/               Section 5's statistical workload (Table 2, ablations, sensitivity sweep)
-  synthetic_workload.py      packaged, unmodified port of the repository root's prototype.py
+  synthetic_workload.py      packaged copy of prototype.py (see below), unmodified
 
 tests/                    pytest suite
   test_core_properties.py    Proposition "sanity properties": partition, monotonicity, Fail=>block, allow=>Pass, decision recovery
   test_overhead.py            Proposition "finite-state decidability/overhead": exact O(m+d) operation counts
   test_examples.py            runs both Section 6 narratives end to end
   test_invariants_smoke.py    small-n smoke test of the stress harness's qualitative pattern
+
+prototype.py              original, standalone script for Section 5's aggregate-counter workload;
+                          kept at the repo root for transparency. evaluation/synthetic_workload.py
+                          is the same code, bit-for-bit, just packaged for `run_demo.py`.
 
 run_demo.py               single CLI entry point (see below)
 ```
@@ -79,7 +83,7 @@ Table 2 reproduction, pytest) is logged in [`RESULTS.md`](RESULTS.md).
 | Corollary (interface-compositional preservation) | 5 | not executable here (it is a composition argument over components not instantiated in this single-MAS demo); see Limitations below |
 | Proposition (sanity properties) | 4.5 | `tests/test_core_properties.py` |
 | Proposition (finite-state decidability / `O(m+d)` overhead) | 4.5 | `tests/test_overhead.py` |
-| Section 5 Table 2 / ablations / sensitivity sweep | 5 | `evaluation/synthetic_workload.py` (packaged copy of the root `prototype.py`) |
+| Section 5 Table 2 / ablations / sensitivity sweep | 5 | `prototype.py` / `evaluation/synthetic_workload.py` (same code, packaged) |
 | Section 6 healthcare narrative | 6 | `examples/healthcare_case_study.py` |
 | Section 6 "Transfer beyond healthcare" (`deleteBackup`) | 6 | `examples/backup_deletion.py` |
 
@@ -134,8 +138,8 @@ paper:
 - **The Corollary on interface-compositional preservation** is not
   separately exercised: this demo instantiates one heterogeneous MAS, not
   multiple composed components with their own local invariants.
-- `evaluation/synthetic_workload.py` is an intentionally *separate*,
-  simpler aggregate-counter model (ported unchanged from `prototype.py`) —
-  it is what produced Table 2's numbers and is kept bit-for-bit identical to
-  the paper; it does not share code with `agt/`, which is the actual
+- `prototype.py` (and its packaged copy `evaluation/synthetic_workload.py`)
+  is an intentionally *separate*, simpler aggregate-counter model — it is
+  what produced Table 2's numbers and is kept bit-for-bit identical to the
+  paper; it does not share code with `agt/`, which is the actual
   object-level engine built for this demo.
